@@ -2,15 +2,8 @@ from enum import Enum
 from field import Field
 from frame import Frame
 from mino_queue import MinoQueue
-from enums import MoveDirection
-
-# REDUCE_COUNT / ADVANCE_COUNTER = times to move per frame
-REDUCE_COUNT = 1
-ADVANCE_COUNTER = 15
-
-class GameState(Enum):
-    PLAYING = 0
-    GAME_OVER = 1
+from constants import GameState, MoveDirection
+import constants as C
 
 class Game:
     def __init__(self):
@@ -61,5 +54,5 @@ class Game:
             self.advance_counter += 1
 
     def __reset_counter(self):
-        self.advance_counter = ADVANCE_COUNTER
-        self.reduce_count = REDUCE_COUNT
+        self.advance_counter = C.ADVANCE_COUNTER
+        self.reduce_count = C.REDUCE_COUNT

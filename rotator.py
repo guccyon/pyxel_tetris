@@ -1,5 +1,5 @@
 import numpy as np
-from enums import Rotation, MinoType
+from constants import Rotation, MinoType
 
 class Rotator:
     def __init__(self, matrix, rotation):

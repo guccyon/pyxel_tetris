@@ -1,5 +1,14 @@
 from enum import Enum
 
+# REDUCE_COUNT / ADVANCE_COUNTER = times to move per frame
+REDUCE_COUNT = 1
+ADVANCE_COUNTER = 15
+FPS = 30
+
+class GameState(Enum):
+    PLAYING = 0
+    GAME_OVER = 1
+
 class MinoType(Enum):
     S_MINO = [
         [0, 1, 1],

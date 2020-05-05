@@ -1,6 +1,6 @@
 import pyxel
 from mino import Block, Mino
-from enums import MoveDirection
+from constants import MoveDirection
 from rotator import Rotator
     
 FIELD_WIDTH = 10

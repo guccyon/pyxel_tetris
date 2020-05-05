@@ -1,20 +1,16 @@
 import pyxel
-from game import Game, GameState
-from enums import MoveDirection, RotateDirection
+from game import Game
+from constants import GameState, MoveDirection, RotateDirection
+import constants as C
 
 SCREEN_WIDTH = 80 + 16
 SCREEN_HEIGHT = 160 + 16
-
-# REDUCE_COUNT / ADVANCE_COUNTER = times to move per frame
-REDUCE_COUNT = 1
-ADVANCE_COUNTER = 15
-FPS = 30
 
 class App:
     ####################
     ## Initialization
     def __init__(self):
-        pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, fps = FPS)
+        pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, fps = C.FPS)
         pyxel.load('assets/images.pyxres')
         self.start_game()
         pyxel.run(self.update, self.draw)

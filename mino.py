@@ -1,7 +1,7 @@
 from enum import Enum
 import pyxel
 from rotator import Rotator
-from enums import MinoType, Rotation, MoveDirection, RotateDirection
+from constants import MinoType, Rotation, MoveDirection, RotateDirection
 
 class Vec2:
     def __init__(self, x, y):
