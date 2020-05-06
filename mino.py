@@ -30,7 +30,6 @@ class Block(Enum):
         else:
             pyxel.blt(x, y, 0, self.value * 8, 0, 8, 8)
 
-
 class Mino:
     def __init__(self, mino_type, position = Vec2(4, -1), rotation = Rotation.UP):
         self.rotation = rotation

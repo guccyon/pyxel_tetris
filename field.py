@@ -17,7 +17,7 @@ class Field:
     def __init__(self):
         self.field = []
         for _ in range(FIELD_HEIGHT):
-            self.field.append([0] * FIELD_WIDTH)
+            self.field.append([Block.Blank] * FIELD_WIDTH)
         self.width = len(self.field[0])
         self.height = len(self.field)
     
@@ -27,17 +27,17 @@ class Field:
             for j, col in enumerate(row):
                 if col == 0: continue    
                 field_col_num = j + mino.position.x
-                self.field[field_line_num][field_col_num] = col
+                self.field[field_line_num][field_col_num] = Block(col)
     
     def remove_complete_lines(self):
         complete_line_indexes = [   
             i
             for i, line in enumerate(self.field)
-            if all( col != 0 for col in line )
+            if all( col != Block.Blank for col in line )
         ]
         for i in complete_line_indexes:
             del self.field[i]
-            self.field.insert(0, [0] * FIELD_WIDTH)
+            self.field.insert(0, [Block.Blank] * FIELD_WIDTH)
         
         return len(complete_line_indexes) > 0
 
@@ -74,7 +74,7 @@ class Field:
     def __is_collision_with_placed_blocks(self, mino):
         rect = slice_rect(self.field, mino.position.x, mino.position.y, mino.width, mino.height)
         for i, row in enumerate(mino.rotated_blocks()):
-            if any( x * y != 0 for x,y in zip(row, rect[i]) ):
+            if any( x * y.value != 0 for x,y in zip(row, rect[i]) ):
                 return True
 
         return False
@@ -85,8 +85,9 @@ class Field:
                 self.__draw_line(i, line, offset_x, offset_y)
                 
     def __draw_line(self, line_num, line, offset_x, offset_y):
-        for col_num, col in enumerate(line):
-            Block(col).draw_block(
+        for col_num, block in enumerate(line):
+            block.draw_block(
                 (col_num + offset_x) * 8,
                 (line_num + offset_y) * 8
             )
+
