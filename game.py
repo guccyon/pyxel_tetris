@@ -24,28 +24,26 @@ class Game:
 
         self.advance_counter -= self.reduce_count
         if self.advance_counter <= 0:
-            self.advance()
+            self.__advance()
         
 
     def draw(self):
         self.layout.draw(self.current_mino)
 
     def move(self, direction):
-        next_mino = self.current_mino.clone_applied_with(move_direction=direction)
-        if self.field.is_collision(next_mino):
+        if self.current_mino.can_move(self.field.field, direction):
             self.current_mino.move(direction)
     
     def rotate(self, direction):
-        next_mino = self.current_mino.clone_applied_with(rotate_direction=direction)
-        if self.field.is_collision(next_mino):
+        if self.current_mino.can_rotate(self.field.field, direction):
             self.current_mino.rotate(direction)
     
     def drop(self):
-        while self.field.can_move(self.current_mino, MoveDirection.DOWN):
+        while self.current_mino.can_move(self.field.field, MoveDirection.DOWN):
             self.current_mino.move(MoveDirection.DOWN)
     
-    def advance(self):
-        if self.field.can_move(self.current_mino, MoveDirection.DOWN):
+    def __advance(self):
+        if self.current_mino.can_move(self.field.field, MoveDirection.DOWN):
             self.current_mino.move(MoveDirection.DOWN)
             self.__reset_counter()
         else:

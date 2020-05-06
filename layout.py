@@ -1,7 +1,7 @@
 import pyxel
 import constants as C
-from mino import Block
 from coordinate import Point
+from block import Block
 
 class Layout:
     def __init__(self, field, queue):
@@ -25,7 +25,7 @@ class Layout:
     def __draw_background(self):
         for y in range(C.FIELD_HEIGHT + 2):
             for x in range(C.FIELD_WIDTH + 8):
-                pyxel.blt(x * 8, y * 8, 0, 0, 8, 8, 8)  
+                pyxel.blt(x * 8, y * 8, 0, 0, 0, 8, 8)  
 
     def __output_mino(self):
         for x in range(3, 9):

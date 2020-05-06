@@ -1,7 +1,9 @@
-from mino import MinoType, Mino
-from queue import SimpleQueue
-import random
 import pyxel
+import random
+from queue import SimpleQueue
+from constants import MinoType
+from mino import Mino
+
 
 class MinoQueue:
     def __init__(self):
