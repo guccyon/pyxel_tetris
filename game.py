@@ -1,6 +1,6 @@
 from enum import Enum
 from field import Field
-from frame import Frame
+from layout import Layout
 from mino_queue import MinoQueue
 from constants import GameState, MoveDirection
 import constants as C
@@ -8,8 +8,8 @@ import constants as C
 class Game:
     def __init__(self):
         self.field = Field()
-        self.frame = Frame(self.field)
         self.queue = MinoQueue()
+        self.layout = Layout(self.field, self.queue)
         self.current_mino = self.queue.get_next()
         self.state = GameState.PLAYING
         self.__reset_counter()
@@ -28,7 +28,7 @@ class Game:
         
 
     def draw(self):
-        self.frame.draw(self.current_mino)
+        self.layout.draw(self.current_mino)
 
     def move(self, direction):
         next_mino = self.current_mino.clone_applied_with(move_direction=direction)

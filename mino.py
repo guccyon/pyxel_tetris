@@ -2,17 +2,7 @@ from enum import Enum
 import pyxel
 from rotator import Rotator
 from constants import MinoType, Rotation, MoveDirection, RotateDirection
-
-class Vec2:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def apply(self, direction):
-        return Vec2(
-            self.x + direction.value[0],
-            self.y + direction.value[1]
-        )
+from coordinate import Point
 
 class Block(Enum):
     Blank = 0
@@ -24,14 +14,27 @@ class Block(Enum):
     PURPLE = 6
     L_BLUE = 7
 
-    def draw_block(self, x, y):
+    def draw_block(self, point, small = False):
         if self == self.__class__.Blank:
-            pyxel.rect(x, y, 8, 8, pyxel.COLOR_BLACK)
+            pyxel.rect(point.x * 8, point.y * 8, 8, 8, pyxel.COLOR_BLACK)
+        elif small:
+            pyxel.blt(point.x * 8, point.y * 8, 0, self.value * 6, 8, 6, 6)
         else:
-            pyxel.blt(x, y, 0, self.value * 8, 0, 8, 8)
+            pyxel.blt(point.x * 8, point.y * 8, 0, self.value * 8, 0, 8, 8)
+
+class Blocks:
+    def __init__(self, matrix):
+        self.matrix = matrix
+    
+    def draw(self, offset, small = False):
+        for i, row in enumerate(self.matrix):
+            for j, column in enumerate(row):
+                if column == 0: continue
+                
+                Block(column).draw_block(Point(offset.x + j, offset.y + i))
 
 class Mino:
-    def __init__(self, mino_type, position = Vec2(4, -1), rotation = Rotation.UP):
+    def __init__(self, mino_type, position = Point(4, -1), rotation = Rotation.UP):
         self.rotation = rotation
         self.mino_type = mino_type
         self.position = position
@@ -52,15 +55,13 @@ class Mino:
         return Mino(self.mino_type, position, rotation)
 
     
-    def draw(self, offset_x, offset_y):
+    def draw(self, offset):
         for i, row in enumerate(self.rotated_blocks()):
             for j, column in enumerate(row):
                 if column == 0: continue
 
-                actual_x = (self.position.x + offset_x + j) * 8
-                actual_y = (self.position.y + offset_y + i) * 8
-                block = Block(column)
-                block.draw_block(actual_x, actual_y)
+                point = Point(self.position.x + offset.x + j, self.position.y + offset.y + i)
+                Block(column).draw_block(point)
     
     def __update_size(self):
         blocks = self.rotated_blocks()
@@ -70,7 +71,7 @@ class Mino:
 
 
 if __name__ == "__main__":
-    pos = Vec2(5, 5)
+    pos = Point(5, 5)
     down = pos.apply(MoveDirection.DOWN)
     assert down.x == 5
     assert down.y == 6

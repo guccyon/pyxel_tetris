@@ -1,10 +1,8 @@
 import pyxel
 from mino import Block, Mino
 from constants import MoveDirection
+import constants as C
 from rotator import Rotator
-    
-FIELD_WIDTH = 10
-FIELD_HEIGHT = 20
 
 def slice_rect(field, x, y, width, height):
     result = []
@@ -16,10 +14,8 @@ def slice_rect(field, x, y, width, height):
 class Field:
     def __init__(self):
         self.field = []
-        for _ in range(FIELD_HEIGHT):
-            self.field.append([Block.Blank] * FIELD_WIDTH)
-        self.width = len(self.field[0])
-        self.height = len(self.field)
+        for _ in range(C.FIELD_HEIGHT):
+            self.field.append([Block.Blank] * C.FIELD_WIDTH)
     
     def store(self, mino):
         for i, row in enumerate(mino.rotated_blocks()):
@@ -37,7 +33,7 @@ class Field:
         ]
         for i in complete_line_indexes:
             del self.field[i]
-            self.field.insert(0, [Block.Blank] * FIELD_WIDTH)
+            self.field.insert(0, [Block.Blank] * C.FIELD_WIDTH)
         
         return len(complete_line_indexes) > 0
 
@@ -65,9 +61,9 @@ class Field:
         # left edge
         if mino.position.x < 0: return True
         # right edge
-        if FIELD_WIDTH < mino.position.x + mino.width: return True
+        if C.FIELD_WIDTH < mino.position.x + mino.width: return True
         # bottom edge
-        if FIELD_HEIGHT < mino.position.y + mino.height: return True
+        if C.FIELD_HEIGHT < mino.position.y + mino.height: return True
 
         return False
 
@@ -79,15 +75,9 @@ class Field:
 
         return False
 
-    def draw(self, offset_x, offset_y, drawable_line):
+    def draw(self, offset, drawable_line):
         for i, line in enumerate(self.field):
-            if i < drawable_line:
-                self.__draw_line(i, line, offset_x, offset_y)
-                
-    def __draw_line(self, line_num, line, offset_x, offset_y):
-        for col_num, block in enumerate(line):
-            block.draw_block(
-                (col_num + offset_x) * 8,
-                (line_num + offset_y) * 8
-            )
+            if drawable_line <= i: return 
 
+            for j, block in enumerate(line):
+                block.draw_block(offset.add(j, i))

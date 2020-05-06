@@ -1,5 +1,8 @@
 from enum import Enum
 
+FIELD_WIDTH = 10
+FIELD_HEIGHT = 20
+
 # REDUCE_COUNT / ADVANCE_COUNTER = times to move per frame
 REDUCE_COUNT = 1
 ADVANCE_COUNTER = 15

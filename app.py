@@ -3,7 +3,7 @@ from game import Game
 from constants import GameState, MoveDirection, RotateDirection
 import constants as C
 
-SCREEN_WIDTH = 80 + 16
+SCREEN_WIDTH = 80 + 56
 SCREEN_HEIGHT = 160 + 16
 
 class App:
@@ -32,9 +32,9 @@ class App:
     
     def handle_event_playing(self):
         ## Moving
-        if pyxel.btn(pyxel.KEY_LEFT) or pyxel.btn(pyxel.GAMEPAD_1_LEFT):
+        if pyxel.btnp(pyxel.KEY_LEFT) or pyxel.btnp(pyxel.GAMEPAD_1_LEFT):
             self.game.move(MoveDirection.LEFT)
-        if pyxel.btn(pyxel.KEY_RIGHT) or pyxel.btn(pyxel.GAMEPAD_1_RIGHT):
+        if pyxel.btnp(pyxel.KEY_RIGHT) or pyxel.btnp(pyxel.GAMEPAD_1_RIGHT):
             self.game.move(MoveDirection.RIGHT)
         if pyxel.btn(pyxel.KEY_DOWN) or pyxel.btn(pyxel.GAMEPAD_1_DOWN):
             self.game.move(MoveDirection.DOWN)
