@@ -1,4 +1,5 @@
 from enum import Enum
+import pyxel
 import constants as C
 from constants import GameState, MoveDirection
 from field import Field
@@ -23,6 +24,7 @@ class Game:
             return
                 
         if self.__is_game_over():
+            pyxel.stop(0)
             self.state = GameState.GAME_OVER
             self.layout.reduce_drawable_line()
             return
@@ -37,16 +39,19 @@ class Game:
 
     def move(self, direction):
         if self.mino.can_move(self.field, direction):
+            pyxel.play(1, 3)
             self.mino.move(direction)
     
     def rotate(self, direction):
         if self.mino.can_rotate(self.field, direction):
+            pyxel.play(1, 5)
             self.mino.rotate(direction)
     
     def drop(self):
         while self.mino.can_move(self.field, MoveDirection.DOWN):
             self.mino.move(MoveDirection.DOWN)
-   
+        self.__put_on()
+
     def __is_game_over(self):
         if not self.mino.is_initial_position(): return False
         if self.mino.can_move(self.field, C.MoveDirection.DOWN): return False
@@ -58,9 +63,13 @@ class Game:
             self.mino.move(MoveDirection.DOWN)
             self.__reset_counter()
         else:
-            self.field.store(self.mino.blocks, self.mino.position)
-            self.mino = self.queue.get_next()
-            self.advance_counter += 1
+            self.__put_on()
+    
+    def __put_on(self):
+        self.field.store(self.mino.blocks, self.mino.position)
+        pyxel.play(1, 4)
+        self.mino = self.queue.get_next()
+        self.advance_counter += 1
 
     def __reset_counter(self):
         self.advance_counter = C.ADVANCE_COUNTER

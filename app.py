@@ -8,8 +8,9 @@ class App:
     ## Initialization
     def __init__(self):
         pyxel.init(C.SCREEN_WIDTH, C.SCREEN_HEIGHT, fps = C.FPS)
-        pyxel.load('assets/images.pyxres')
+        pyxel.load('assets/tetris.pyxres')
         self.start_game()
+        pyxel.playm(0, loop=True)
         pyxel.run(self.update, self.draw)
 
     ####################

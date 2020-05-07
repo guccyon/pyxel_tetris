@@ -11,12 +11,16 @@ class Score:
         self.line_count += len(removed_lines)
 
         if len(removed_lines) == 1:
+            pyxel.play(2, 7)
             self.score += 100
         elif len(removed_lines) == 2:
+            pyxel.play(2, 7)
             self.score += 300
         elif len(removed_lines) == 3:
+            pyxel.play(2, 7)
             self.score += 800
         elif len(removed_lines) == 4:
+            pyxel.play(2, 6)
             self.score += 1500
 
     def draw(self, offset):

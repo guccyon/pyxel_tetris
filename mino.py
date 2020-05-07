@@ -6,7 +6,7 @@ from coordinate import Point
 from block import Blocks, Block
 
 class Mino:
-    INITIAL = -1
+    INITIAL = 0
 
     def __init__(self, mino_type, position = Point(4, INITIAL), rotation = Rotation.UP):
         self.rotation = rotation
