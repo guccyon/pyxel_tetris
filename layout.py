@@ -4,9 +4,10 @@ from coordinate import Point, Px
 from block import Block
 
 class Layout:
-    def __init__(self, field, queue):
+    def __init__(self, field, queue, score):
         self.field = field
         self.queue = queue
+        self.score = score
         self.__drawable_line = C.FIELD_HEIGHT + 2
     
     def draw(self, current_mino):
@@ -14,6 +15,7 @@ class Layout:
 
         self.field.draw(Point(1, 1), self.__drawable_line)
         self.queue.draw(Point(12, 1))
+        self.score.draw(Point(0, 22))
 
         if self.__drawable_line > 2:
             self.__output_mino()        

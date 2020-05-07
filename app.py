@@ -57,7 +57,7 @@ class App:
     ####################
     ## Output
     def draw(self):
-        # pyxel.cls(pyxel.COLOR_BLACK)
+        pyxel.cls(pyxel.COLOR_BLACK)
         self.game.draw()
 
 App()

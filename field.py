@@ -23,7 +23,7 @@ class Field:
             del self.__matrix[i]
             self.__matrix.insert(0, [Block.BLANK] * C.FIELD_WIDTH)
         
-        return len(complete_line_indexes) > 0
+        return complete_line_indexes
     
     def is_stored(self, x, y):
         return self.__matrix[y][x] != Block.BLANK

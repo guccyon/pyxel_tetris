@@ -1,21 +1,25 @@
 from enum import Enum
+import constants as C
+from constants import GameState, MoveDirection
 from field import Field
 from layout import Layout
 from mino_queue import MinoQueue
-from constants import GameState, MoveDirection
-import constants as C
+from score import Score
 
 class Game:
     def __init__(self):
         self.field = Field()
         self.queue = MinoQueue()
-        self.layout = Layout(self.field, self.queue)
+        self.score = Score()
+        self.layout = Layout(self.field, self.queue, self.score)
         self.mino = self.queue.get_next()
         self.state = GameState.PLAYING
         self.__reset_counter()
 
     def update(self):
-        if self.field.remove_complete_lines():
+        removed_lines = self.field.remove_complete_lines()
+        if len(removed_lines) > 0:
+            self.score.count_removed(removed_lines)
             return
                 
         if self.__is_game_over():
