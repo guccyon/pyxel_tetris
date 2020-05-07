@@ -3,14 +3,11 @@ from game import Game
 from constants import GameState, MoveDirection, RotateDirection
 import constants as C
 
-SCREEN_WIDTH = 80 + 56
-SCREEN_HEIGHT = 160 + 16
-
 class App:
     ####################
     ## Initialization
     def __init__(self):
-        pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, fps = C.FPS)
+        pyxel.init(C.SCREEN_WIDTH, C.SCREEN_HEIGHT, fps = C.FPS)
         pyxel.load('assets/images.pyxres')
         self.start_game()
         pyxel.run(self.update, self.draw)

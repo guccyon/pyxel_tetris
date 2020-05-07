@@ -1,5 +1,19 @@
 import numpy as np
-from constants import Rotation, MinoType
+from enum import Enum
+from constants import RotateDirection
+
+class Rotation(Enum):
+    UP = 0
+    RIGHT = 90
+    DOWN = 180
+    LEFT = 270        
+
+    def apply(self, direction):
+        return Rotation.value_of(self.value + direction.value)
+
+    @staticmethod
+    def value_of(num):
+        return Rotation((num + 360) % 360)
 
 class Rotator:
     def __init__(self, matrix, rotation):
@@ -15,28 +29,3 @@ class Rotator:
             return list(reversed([i for i in np.transpose(self.matrix)]))
         else:
             return self.matrix
-
-if __name__ == "__main__":
-    for i in Rotator(MinoType.Z_MINO.value, Rotation.UP).rotate(): print(i)
-    print()
-    for i in Rotator(MinoType.Z_MINO.value, Rotation.RIGHT).rotate(): print(i)
-    print()
-    for i in Rotator(MinoType.Z_MINO.value, Rotation.DOWN).rotate(): print(i)
-    print()
-    for i in Rotator(MinoType.Z_MINO.value, Rotation.LEFT).rotate(): print(i)
-    print()
-    for i in Rotator(MinoType.L_MINO.value, Rotation.UP).rotate(): print(i)
-    print()
-    for i in Rotator(MinoType.L_MINO.value, Rotation.RIGHT).rotate(): print(i)
-    print()
-    for i in Rotator(MinoType.L_MINO.value, Rotation.DOWN).rotate(): print(i)
-    print()
-    for i in Rotator(MinoType.L_MINO.value, Rotation.LEFT).rotate(): print(i)
-    print()
-    for i in Rotator(MinoType.T_MINO.value, Rotation.UP).rotate(): print(i)
-    print()
-    for i in Rotator(MinoType.T_MINO.value, Rotation.RIGHT).rotate(): print(i)
-    print()
-    for i in Rotator(MinoType.T_MINO.value, Rotation.DOWN).rotate(): print(i)
-    print()
-    for i in Rotator(MinoType.T_MINO.value, Rotation.LEFT).rotate(): print(i)

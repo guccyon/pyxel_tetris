@@ -3,6 +3,7 @@ import random
 from queue import SimpleQueue
 from constants import MinoType
 from mino import Mino
+from block import Block
 
 
 class MinoQueue:
@@ -24,27 +25,22 @@ class MinoQueue:
     
     def draw(self, offset):
         pyxel.rect(
-            offset.x * 8, offset.y * 8,
-            4 * 8, 4 * 8,
+            offset.actual().x, offset.actual().y,
+            6 * 6, 4 * 6,
             pyxel.COLOR_BLACK)
 
-
-        # self.draw_comming_mino(self.list[0].value)
-        
-        # self.list[0].draw(
-        #     offset_x.add(1).actual(),
-        #     offset_y.add(1).actual(),
-        #     small = True
-        # )
+        self.__draw_comming_block(
+            offset.add(1, 0.7),
+            self.list[0].value)
     
-    # def draw_comming_mino(self, blocks):
-    #     for i, row in enumerate(blocks):
-    #         for j, column in enumerate(row):
-    #             if column == 0: continue
+    def __draw_comming_block(self, offset, matrix):
+        actual_offset = offset.actual()
+        for y, row in enumerate(matrix):
+            for x, column in enumerate(row):
+                if column == 0: continue
+                
+                Block(column).draw_block(
+                    actual_offset.x + (x * 6),
+                    actual_offset.y + (y * 6),
+                    True)
 
-    #             actual_x = (self.position.x + offset_x + j) * 8
-    #             actual_y = (self.position.y + offset_y + i) * 8
-    #             block = Block(column)
-    #             block.draw_block(actual_x, actual_y, small)
-
-        

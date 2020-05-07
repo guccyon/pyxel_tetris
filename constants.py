@@ -1,11 +1,14 @@
 from enum import Enum
 
+SCREEN_WIDTH = 80 + 56
+SCREEN_HEIGHT = 160 + 16
+
 FIELD_WIDTH = 10
 FIELD_HEIGHT = 20
 
 # REDUCE_COUNT / ADVANCE_COUNTER = times to move per frame
 REDUCE_COUNT = 1
-ADVANCE_COUNTER = 20
+ADVANCE_COUNTER = 30
 FPS = 30
 
 class GameState(Enum):
@@ -40,19 +43,6 @@ class MinoType(Enum):
     I_MINO = [
         [7, 7, 7, 7]
     ]
-
-class Rotation(Enum):
-    UP = 0
-    RIGHT = 90
-    DOWN = 180
-    LEFT = 270        
-
-    def apply(self, direction):
-        return Rotation.value_of(self.value + direction.value)
-
-    @staticmethod
-    def value_of(num):
-        return Rotation((num + 360) % 360)
 
 class MoveDirection(Enum):
     LEFT  = (-1, 0)

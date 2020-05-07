@@ -1,6 +1,6 @@
 import pyxel
 import constants as C
-from coordinate import Point
+from coordinate import Point, Px
 from block import Block
 
 class Layout:
@@ -18,15 +18,14 @@ class Layout:
         if self.__drawable_line > 2:
             self.__output_mino()        
             current_mino.draw(Point(1, 1))
-
-        if self.field.is_game_over(current_mino):
-            self.__drawable_line -= 1
+    
+    def reduce_drawable_line(self):
+        self.__drawable_line -= 1
 
     def __draw_background(self):
         for y in range(C.FIELD_HEIGHT + 2):
             for x in range(C.FIELD_WIDTH + 8):
-                pyxel.blt(x * 8, y * 8, 0, 0, 0, 8, 8)  
+                Block.BRICK.draw(Point(x, y))
 
     def __output_mino(self):
-        for x in range(3, 9):
-            Block.Blank.draw_block(Point(x, 0))
+        pyxel.rect(2 * 8, 0, 8 * 8, 8, pyxel.COLOR_BLACK)
