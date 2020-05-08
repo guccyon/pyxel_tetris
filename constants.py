@@ -1,7 +1,9 @@
 from enum import Enum
 
-SCREEN_WIDTH = 80 + 56
-SCREEN_HEIGHT = 160 + 16 + 16
+# holding + frame + field + frame + queue
+SCREEN_WIDTH = (5 + 1 + 10 + 1 + 5) * 8
+# frame + field + frame + score
+SCREEN_HEIGHT = (1 + 20 + 1 + 2) * 8
 
 FIELD_WIDTH = 10
 FIELD_HEIGHT = 20

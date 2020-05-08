@@ -5,14 +5,17 @@ from constants import GameState, MoveDirection
 from field import Field
 from layout import Layout
 from mino_queue import MinoQueue
+from holding import Holding
 from score import Score
+        
 
 class Game:
     def __init__(self):
         self.field = Field()
         self.queue = MinoQueue()
         self.score = Score()
-        self.layout = Layout(self.field, self.queue, self.score)
+        self.__holding = Holding()
+        self.layout = Layout(self.field, self.queue, self.score, self.__holding)
         self.mino = self.queue.get_next()
         self.state = GameState.PLAYING
         self.__reset_counter()
@@ -33,7 +36,6 @@ class Game:
         if self.advance_counter <= 0:
             self.__advance()
         
-
     def draw(self):
         self.layout.draw(self.mino)
 
@@ -51,6 +53,12 @@ class Game:
         while self.mino.can_move(self.field, MoveDirection.DOWN):
             self.mino.move(MoveDirection.DOWN)
         self.__put_on()
+    
+    def hold(self):
+        if self.__holding.can_hold():
+            self.mino = self.__holding.hold(self.mino)
+            if self.mino == None:
+                self.mino = self.queue.get_next()
 
     def __is_game_over(self):
         if not self.mino.is_initial_position(): return False
@@ -70,6 +78,7 @@ class Game:
         pyxel.play(1, 4)
         self.mino = self.queue.get_next()
         self.advance_counter += 1
+        self.__holding.unlock()
 
     def __reset_counter(self):
         self.advance_counter = C.ADVANCE_COUNTER

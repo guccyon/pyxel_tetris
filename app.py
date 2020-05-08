@@ -44,6 +44,10 @@ class App:
             self.game.rotate(RotateDirection.LEFT)
         if pyxel.btnp(pyxel.KEY_X) or pyxel.btnp(pyxel.GAMEPAD_1_X):
             self.game.rotate(RotateDirection.RIGHT)
+        
+        ## Holding
+        if pyxel.btnp(pyxel.KEY_C) or pyxel.btnp(pyxel.GAMEPAD_1_RIGHT_SHOULDER):
+            self.game.hold()
 
     ####################
     ## Game Logic

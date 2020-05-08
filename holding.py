@@ -1,45 +1,44 @@
 import pyxel
-import random
-from queue import SimpleQueue
-from constants import MinoType
 from mino import Mino
 from block import Block
 
-
-class MinoQueue:
+class Holding:
     def __init__(self):
-        self.list = []
-        self.prepare_next_round()
+        self.__locked = False
+        self.__mino_type = None
 
-    def get_next(self):
-        mino = Mino(self.list.pop(0))
-        if len(self.list) < 5:
-            self.prepare_next_round()
-        return mino
-    
-    def prepare_next_round(self):
-        types = list(MinoType)
-        random.shuffle(types)
-        for i in types:
-            self.list.append(i)
+    def can_hold(self):
+        return not self.__locked
+
+    def hold(self, mino):
+        self.__locked = True
+        if self.__mino_type == None:
+            self.__mino_type = mino.mino_type
+            return None
+        else:
+            unhold_mino = Mino(self.__mino_type)
+            self.__mino_type = mino.mino_type
+            return unhold_mino
+
+    def unlock(self):
+        self.__locked = False
     
     def draw(self, offset):
-        # top margin
-        offset = offset.add(0, 1)
+        offset = offset.add(1, 1)
 
         pyxel.rect(
             offset.actual().x, offset.actual().y,
             32, 32,
             pyxel.COLOR_BLACK)
-            
         pyxel.text(
             offset.add(1, 0).actual().x, offset.actual().y,
-            "Next",
+            "Hold",
             pyxel.COLOR_WHITE
         )
-        self.__draw_comming_block(offset.add(0, 1), self.list[0].value)
-    
-    def __draw_comming_block(self, offset, matrix):       
+        if self.__mino_type:
+            self.__draw_holding_mino(offset.add(0, 1), self.__mino_type.value)
+        
+    def __draw_holding_mino(self, offset, matrix):       
         actual_offset = offset.actual().add(
             (32 - len(matrix[0]) * 6) / 2,
             (24 - len(matrix) * 6) / 2)
@@ -51,4 +50,4 @@ class MinoQueue:
                     actual_offset.x + (x * 6),
                     actual_offset.y + (y * 6),
                     True)
-
+        
