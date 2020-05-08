@@ -1,7 +1,8 @@
 from enum import Enum
 
 # holding + frame + field + frame + queue
-SCREEN_WIDTH = (5 + 1 + 10 + 1 + 5) * 8
+# SCREEN_WIDTH = (5 + 1 + 10 + 1 + 5) * 8
+SCREEN_WIDTH = 255
 # frame + field + frame + score
 SCREEN_HEIGHT = (1 + 20 + 1 + 2) * 8
 

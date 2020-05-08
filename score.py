@@ -33,6 +33,6 @@ class Score:
         pyxel.text(
             offset.actual().x,
             offset.actual().y + 8,
-            "Score:" + str(self.score),
+            "Score: " + str(self.score),
             pyxel.COLOR_WHITE
         )

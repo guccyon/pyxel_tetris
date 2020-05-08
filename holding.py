@@ -1,6 +1,7 @@
 import pyxel
 from mino import Mino
 from block import Block
+from coordinate import Px
 
 class Holding:
     def __init__(self):
@@ -24,11 +25,9 @@ class Holding:
         self.__locked = False
     
     def draw(self, offset):
-        offset = offset.add(1, 1)
-
         pyxel.rect(
             offset.actual().x, offset.actual().y,
-            32, 32,
+            Px(4).actual(), Px(4).actual(),
             pyxel.COLOR_BLACK)
         pyxel.text(
             offset.add(1, 0).actual().x, offset.actual().y,

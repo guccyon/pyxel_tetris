@@ -10,15 +10,16 @@ from score import Score
         
 
 class Game:
-    def __init__(self):
+    def __init__(self, player_no = 0):
         self.field = Field()
         self.queue = MinoQueue()
         self.score = Score()
         self.__holding = Holding()
-        self.layout = Layout(self.field, self.queue, self.score, self.__holding)
+        self.layout = Layout(self.field, self.queue, self.score, self.__holding, player_no)
         self.mino = self.queue.get_next()
         self.state = GameState.PLAYING
         self.__reset_counter()
+        self.player_no = player_no
 
     def update(self):
         removed_lines = self.field.remove_complete_lines()
